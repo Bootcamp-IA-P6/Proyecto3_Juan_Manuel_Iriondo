@@ -34,7 +34,7 @@ INSTALLED_APPS = [
 ```
 **webscraper_project/scraper/models.py**
 
-´´´
+```
 from django.db import models
 
 # Create your models here.
@@ -45,7 +45,7 @@ class ScrapedDataJuanma(models.Model):
 
     def __str__(self):
         return self.title
-´´´
+```
 
 **webscraper_project/scraper/services/scrape_juanma.py**
 
