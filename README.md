@@ -1,4 +1,4 @@
-# Proyecto3_Juan_Manual_Iriondo
+# Proyecto3_Juan_Manuel_Iriondo
 ## Django Scraper
 
 Este proyecto scrapea mi página web del curriculum : jumair.github.io/curriculum
