@@ -1,16 +1,16 @@
 # Proyecto3_Juan_Manual_Iriondo
 ## Django Scraper
 
+Este proyecto scrapea mi página web del curriculum : jumair.github.io/curriculum
+
 ## Primer paso: Scraper en un servicio activado con comando en Django
 
-Te voy a guiar paso a paso en los comandos que tienes que ejecutar en tu consola. Damos por hecho que tienes python instalado. 
+Guía paso a paso en los comandos que hay que ejecutar en tu consola. Doy por hecho que tienes python instalado. 
 
-- `mkdir webscraper`
-- `cd webscraper`
-- touch `.gitignore`  (Crear gitignore)
-- Con ayuda de esta página puedes crear gitignore configurando lo que necesitas: Windows y Django por ejemplo: https://www.toptal.com/developers/gitignore)
 - Crear entorno virtual: `python3 -m venv venv` o `python -m venv venv`
 - Levantar entorno virtual: En OSX: `source venv/bin/activate` en Bash: `source venv/Script/active`
+
+# Pasos que se harán sólos al hacer pip install -r requirements.txt
 - (En el entorno virtual) `pip install django`
 - `django-admin startproject webscraper_project`
 - `pip install selenium` (Selenium It’s slower than requests and BeautifulSoup because it loads the entire browser)
@@ -142,3 +142,19 @@ class Command(BaseCommand):
 - Ejecutar comando:  python3 manage.py scraper
 - Verifico que en la bd está la información
 - Extra: Personaliza este scraper para guardar otros datos.
+
+# FIN de pasos hechos por mi
+
+
+
+## Tecnologías usadas
+
+Python, Django, Selenium, webdriver-manager
+
+## Ejecutar desde la primera carpeta webscraper_project donde se encuentra el fichero manage.py
+
+Ejecuta el comando
+
+```
+python manage.py scraper
+```
