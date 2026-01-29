@@ -12,7 +12,7 @@ Este proyecto crea un servicio scraper activado con comando en Django
 - En el fichero settings.py que está situado en webscraper_project/webscraper_project, en INSTALLED_APPS se ha añdido el servicio scraper para que pueda ser ejecutado.
 - En el directorio scraper que es el servicio tenemos lo siguiente :
     - Un fichero models.py con el modelo de datos de la base de datos. Se guardarán el h2, el párrafo y la fecha en la que se hace el scraping.
-    - En el fichero scrape_juanma.py está la lógica que obtiene los datos de la página web. Se obtienen el <h2> y el <p> cuando todos los elementos de CLASS_NAME = "parrafo" estén creados en la página.
+    - En el fichero scrape_juanma.py está la lógica que obtiene los datos de la página web. Se obtienen el *h2* y el *p* cuando todos los elementos de CLASS_NAME = "parrafo" estén creados en la página.
     - El fichero scraper.py contiene las intrucciones para ejecutar el scraping llamando a la función **scrape_website_juanma()** que está en el fichero scrape_juanma.py.
 
 ### 🎯 Ficheros
@@ -55,18 +55,13 @@ Python, Django, Selenium, webdriver-manager
     pip install -r requirements.txt
 
 2.- Ejecuta el servicio **scraper**. 
+*Debes estar ubicado en el directorio webscraper_project que es donde se encuentra el fichero manage.py*
 
-    *Debes estar ubicado en el directorio webscraper_project que es donde se encuentra el fichero manage.py*
-
-    ```
     cd webscraper_project
-    ```
 
-    ```
     python manage.py scraper
-    ```
 
-3.- Puedo comprobar la estructura en SQlite para ver que todo va bien con https://sqlitebrowser.org/ (Por defecto Django trabaja con Sqlite podrias cambiarlo en settings.py)
+3.- Puedes comprobar la estructura en SQlite para ver que todo va bien con https://sqlitebrowser.org/ (Por defecto Django trabaja con Sqlite podrias cambiarlo en settings.py)
 
 ### 🪪 Contacto
 Si tienes cualquier sugerencia o consulta, contáctame a través de juanmanuel.iriondo@gmail.com
