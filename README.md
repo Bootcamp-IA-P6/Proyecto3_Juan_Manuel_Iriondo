@@ -1,168 +1,51 @@
 # Proyecto3_Juan_Manuel_Iriondo
 ## Django Scraper + Docker
 
-Este proyecto scrapea mi página web del curriculum : jumair.github.io/curriculum y guarda los datos en una base de datos Sqlite3.
+Este proyecto scrapea mi página web del curriculum : jumair.github.io/curriculum y guarda los datos en una base de datos Sqlite3 y lo dockeriza todo para poder ejecutarlo en cualquier máquina.
 
-Cambio hecho en requirements.txt Django>=5.2,<6.0
-
-Levantar Docker con docker compose up --build
-
-
-
+## 🚀 Imagen pública en docker_hub (352 MB)
+https://hub.docker.com/r/jmiriondo/proyecto3_juan_manual_iriondo-server
 
 ## 📝 Descripción del Proyecto
 
-Este proyecto crea un servicio scraper activado con comando en Django.
+Este proyecto crea un servicio scraper activado con comando en Django y lo dockeriza.
 
 ### 📢 Explicación
 
-- En el fichero settings.py que está situado en webscraper_project/webscraper_project, en INSTALLED_APPS se ha añdido el servicio scraper para que pueda ser ejecutado.
-- En el directorio scraper que es el servicio tenemos lo siguiente :
-    - Un fichero models.py con el modelo de datos de la base de datos. Se guardarán el h2, el párrafo y la fecha en la que se hace el scraping.
-    - En el fichero scrape_juanma.py está la lógica que obtiene los datos de la página web. Se obtienen el *h2* y el *p* cuando todos los elementos de CLASS_NAME = "parrafo" estén creados en la página.
-    - El fichero scraper.py contiene las intrucciones para ejecutar el scraping llamando a la función **scrape_website_juanma()** que está en el fichero scrape_juanma.py.
-
-### 🎯 Ficheros
-
-**webscraper_project/webscraper_project/settings.py**
-
-```
-# Application definition
-
-INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'scraper'
-]
-```
-**webscraper_project/scraper/models.py**
-
-```
-from django.db import models
-
-# Create your models here.
-class ScrapedDataJuanma(models.Model):
-    h2 = models.CharField(max_length=100)
-    paragraph = models.CharField(max_length=500)
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return self.title
-```
-
-**webscraper_project/scraper/services/scrape_juanma.py**
-
-```
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-
-# Para Chrome
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.chrome.options import Options
-from webdriver_manager.chrome import ChromeDriverManager
-
-def scrape_website_juanma():
-    # Configurar Selenium
-    options = Options()
-    options.add_argument('--headless')  # Ejecutar en modo headless
-    options.add_argument('--no-sandbox')  # Requerido para algunos servidores
-    options.add_argument('--disable-dev-shm-usage')  # Para evitar errores de memoria
-
-    # 🔹 Aquí inicializamos correctamente `service`
-    service = Service(ChromeDriverManager().install())
-
-    # Para Chrome
-    # Selenium Manager se encargará de descargar y gestionar el WebDriver
-    #service = Service()  # No es necesario especificar el ejecutable
-    driver = webdriver.Chrome(service=service, options=options)
-
-    # Navegar al sitio web
-    url = "https://jumair.github.io/curriculum/"
-    driver.get(url)
-    print(driver.title)  
-# Esperar a que los elementos estén presentes
-    try:
-        WebDriverWait(driver, 10).until(
-            #EC.presence_of_all_elements_located((By.CSS_SELECTOR, "h2"))
-            EC.presence_of_all_elements_located((By.CLASS_NAME, "parrafo"))
-        )
-        headers = driver.find_elements(By.CSS_SELECTOR, "h2")
-        paragraphs = driver.find_elements(By.CSS_SELECTOR, "p")
-    except Exception as e:
-        print("Error al encontrar los elementos:", e)
-        driver.quit()
-        return []
-
-    scraped_data = []
-    for header, paragraph in zip(headers, paragraphs):
-        scraped_data.append({
-            "h2": header.text,
-            "paragraph": paragraph.get_attribute("textContent"), 
-        })
-
-    print("Scraped data in scrape_website_juanma :", scraped_data)  # Para depuración
-    driver.quit()
-    return scraped_data
-```
-
-**webscraper_project/scraper/management/commands/scraper.py**
-
-```
-from django.core.management.base import BaseCommand
-from scraper.services.scrape_juanma import scrape_website_juanma
-from scraper.models import ScrapedDataJuanma
-
-class Command(BaseCommand):
-    help = "Run the web scraper de Juanma"
-    # Hereda de BaseCommand, lo que permite que este comando sea ejecutable mediante python manage.py <nombre_comando>.
-
-    def handle(self, *args, **kwargs):
-        # Ejecuta función
-        data = scrape_website_juanma()
-        print("Scraped Data in Command :", data)  # Agrega esta línea para depurar
-        #print("Scraped Data in position 0 :", data[0]["paragraph"])  # Agrega esta línea para depurar y ver el párrafo del primer elemento 
-        # Guarda
-        for item in data:
-            ScrapedDataJuanma.objects.create(h2=item["h2"], paragraph=item["paragraph"])
-        # Confirma
-        self.stdout.write(self.style.SUCCESS("Scraping completed!"))
-```
+- En el fichero Dockerfile que está situado en la raiz están las instrucciones para la creación de la imagen.
+- El fichero compose.yaml sólo tiene el contexto y el puerto que expone.
+- En requirements.txt se ha cambiado la línea donde ponía otra versión de Django por una versión inferior para que funcione (sugerido por chatgpt) **Django>=5.2,<6.0**
 
 ### 🛠️ Tecnologías Usadas
 
-Python, Django, Selenium, webdriver-manager y Sqlite3
+Python, Django, Selenium, Sqlite3 y Docker
 
-### 💾 Instalación
-1.- Clona el repositorio
+### 💾 Uso y Acciones
 
-    git clone https://github.com/Bootcamp-IA-P6/Proyecto3_Juan_Manual_Iriondo.git
+Una vez levantado el contenedor podemos hacer lo siguiente :
 
-2.- Navega al directorio del proyecto
+```
+docker ps #listamos nombre del contenedor
 
-    cd "directorio_del_proyecto"
+docker exec -it proyecto3_juan_manual_iriondo_server-1 bash #Ejecuta una terminal bash en el contenedor
+**Si, me equivoque y puse manual en vez de manuel**
 
-### 🚀 Uso
+python webscraper_project/manage.py scraper #Ejecuta el scraper y guarda los datos en sqlite3
 
-1.- Instala un entorno virtual, actívalo e instala las librerías
+#Comprobamos los datos en la base de datos
+apt-get update && apt-get install -y sqlite3
 
-    python -m venv venv
-    source venv/Scripts/activate (source venv/bin/activate si estás en Mac)
-    pip install -r requirements.txt
+(Asegurate que estás en webscraper_project)
+cd webscraper_project
+sqlite3 db.sqlite3 #Abrimos terminal de sqlite3 con nuestra base de datos creada
 
-2.- Ejecuta el servicio **scraper**. 
-*Debes estar ubicado en el directorio webscraper_project que es donde se encuentra el fichero manage.py*
+#Los comandos en esta terminal se preceden de . y los comandos sql terminan con ;
+sqlite> .tables
+sqlite> SELECT * FROM scraper_scrapeddata;
+sqlite> .quit #Volvemos a la terminal bash del contenedor
 
-    cd webscraper_project
-
-    python manage.py scraper
-
-3.- Puedes comprobar la estructura en SQlite para ver que todo va bien con https://sqlitebrowser.org/ (Por defecto Django trabaja con Sqlite podrias cambiarlo en settings.py)
+exit #Salimos al entorno virtual local
+```
 
 ### 🪪 Contacto
 Si tienes cualquier sugerencia o consulta, contáctame a través de juanmanuel.iriondo@gmail.com
