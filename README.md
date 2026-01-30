@@ -1,7 +1,14 @@
 # Proyecto3_Juan_Manuel_Iriondo
-## Django Scraper
+## Django Scraper + Docker
 
 Este proyecto scrapea mi página web del curriculum : jumair.github.io/curriculum y guarda los datos en una base de datos Sqlite3.
+
+Cambio hecho en requirements.txt Django>=5.2,<6.0
+
+Levantar Docker con docker compose up --build
+
+
+
 
 ## 📝 Descripción del Proyecto
 
