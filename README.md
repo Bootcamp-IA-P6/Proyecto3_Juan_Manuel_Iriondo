@@ -1,11 +1,11 @@
 # Proyecto3_Juan_Manuel_Iriondo
 ## Django Scraper
 
-Este proyecto scrapea mi página web del curriculum : jumair.github.io/curriculum
+Este proyecto scrapea mi página web del curriculum : jumair.github.io/curriculum y guarda los datos en una base de datos Sqlite3.
 
 ## 📝 Descripción del Proyecto
 
-Este proyecto crea un servicio scraper activado con comando en Django
+Este proyecto crea un servicio scraper activado con comando en Django.
 
 ### 📢 Explicación
 
@@ -129,7 +129,7 @@ class Command(BaseCommand):
 
 ### 🛠️ Tecnologías Usadas
 
-Python, Django, Selenium, webdriver-manager
+Python, Django, Selenium, webdriver-manager y Sqlite3
 
 ### 💾 Instalación
 1.- Clona el repositorio
