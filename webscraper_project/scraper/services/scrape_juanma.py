@@ -3,9 +3,9 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-# Para Chrome
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.chrome.options import Options
+# Para firefox
+from selenium.webdriver.firefox.service import Service
+from selenium.webdriver.firefox.options import Options
 
 def scrape_website_juanma():
     # Configurar Selenium
